@@ -16,7 +16,7 @@ Aplicación cliente construida sobre el **paquete `kuzco_app`**, donde toda la l
 Este repositorio actúa como **cliente** del paquete versionado `kuzco_app`.
 
 - **`kuzco_app`**: contiene navegación, módulos, providers, UI base y flujo de inicialización.
-- **Este repo**: provee `Env`, `ThemeData`, `AppIcons` y credenciales para inicializar el paquete.
+- **Remo del cliente**: provee `Env`, `ThemeData`, `AppIcons` y credenciales para inicializar el paquete.
 
 ---
 
