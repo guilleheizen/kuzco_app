@@ -1,39 +1,68 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+# Mobile (Kuzco Package App)
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/tools/pub/writing-package-pages).
+Aplicación cliente construida sobre el **paquete `kuzco_app`**, donde toda la lógica/arquitectura vive en el paquete y este repo únicamente define **configuración del cliente**:
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/to/develop-packages).
--->
+- Identidad del cliente (keys)
+- URLs (discovery / imágenes)
+- Versionado
+- Temas (light/dark)
+- Set de íconos (custom icons)
+- Bootstrap / providers
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+---
 
-## Features
+## 🧩 Arquitectura
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+Este repositorio actúa como **cliente** del paquete versionado `kuzco_app`.
 
-## Getting started
+- **`kuzco_app`**: contiene navegación, módulos, providers, UI base y flujo de inicialización.
+- **Este repo**: provee `Env`, `ThemeData`, `AppIcons` y credenciales para inicializar el paquete.
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+---
 
-## Usage
+## ✅ Requisitos
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
+- Flutter (stable recomendado)
+- Dart SDK compatible con tu versión de Flutter
+- `flutterfire` (solo si tu app usa Firebase)
+- Variables de entorno (ver sección **Env**)
+
+---
+
+## 🚀 Inicialización (Main)
+
+La app se inicializa registrando la configuración del cliente con `KuzcoInitInformation(...)`,
+haciendo `bootstrap()` y finalmente corriendo `KuzcoApp`.
 
 ```dart
-const like = 'sample';
+import 'package:flutter/material.dart';
+
+import 'package:kuzco_app/kuzcco_app.dart';
+import 'package:test_mobile/theme/custom_icons.dart';
+import 'package:test_mobile/theme/light_theme.dart';
+import 'package:test_mobile/theme/dark_theme.dart';
+import 'package:test_mobile/env/env.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  KuzcoInitInformation(
+    discoveryUrl: Env.discoveryUrl,
+    fullImageUrl: Env.fullImageUrl,
+    thumbnailImageUrl: Env.thumbnailImageUrl,
+    privateKey: Env.privateKey,
+    publicKey: Env.publicKey,
+    version: Env.version,
+    lightTheme: LightTheme.data,
+    darkTheme: DarkTheme.data,
+    appIcons: CustomIcons.instance,
+  );
+
+  final providerContainer = await bootstrap();
+
+  runApp(KuzcoApp(
+    container: providerContainer,
+    title: 'Nombre de tu app',
+  ));
+}
 ```
-
-## Additional information
-
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
