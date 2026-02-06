@@ -10,6 +10,7 @@ class HomeNotifier extends AsyncNotifier<HomeState> {
   Future<HomeState> build() async {
     final configNotifier = ref.read(configProvider.notifier);
     return HomeState(
+      isSimpleBannerAvailable: configNotifier.isRemoteConfigActiveByCode(RemoteConfigAvailable.homeSimpleBanner),
       isHomeMossaicBannerAvailable: configNotifier.isRemoteConfigActiveByCode(RemoteConfigAvailable.homeMossaicBanner),
       isHomePromotionBannerAvailable: configNotifier.isRemoteConfigActiveByCode(RemoteConfigAvailable.homePromotionBanner),
       isHomeProductAvailable: configNotifier.isRemoteConfigActiveByCode(RemoteConfigAvailable.homeProduct),
@@ -18,9 +19,10 @@ class HomeNotifier extends AsyncNotifier<HomeState> {
 }
 
 class HomeState {
+  bool isSimpleBannerAvailable;
   bool isHomeMossaicBannerAvailable;
   bool isHomePromotionBannerAvailable;
   bool isHomeProductAvailable;
 
-  HomeState({required this.isHomeMossaicBannerAvailable, required this.isHomePromotionBannerAvailable, required this.isHomeProductAvailable});
+  HomeState({required this.isSimpleBannerAvailable, required this.isHomeMossaicBannerAvailable, required this.isHomePromotionBannerAvailable, required this.isHomeProductAvailable});
 }

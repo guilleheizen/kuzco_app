@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kuzco_app/module/banner/ui/mossaic/mossaic_banner_widget.dart';
 import 'package:kuzco_app/module/banner/ui/promotion/promotion_banner_widget.dart';
+import 'package:kuzco_app/module/banner/ui/simple/simple_banner_widget.dart';
 import 'package:kuzco_app/module/home/provider/home_provider.dart';
 import 'package:kuzco_app/module/product/ui/widget/product_list_widget.dart';
 import 'package:kuzco_app/ui/widgets/index.dart';
@@ -34,6 +35,7 @@ class HomeTab extends ConsumerWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Visibility(visible: data.isSimpleBannerAvailable, child: SimpleBanner()),
                   Visibility(visible: data.isHomeMossaicBannerAvailable, child: MossaicBanner()),
                   Visibility(visible: data.isHomePromotionBannerAvailable, child: PromotionBanner()),
                   Visibility(visible: data.isHomeProductAvailable, child: ProductList()),
